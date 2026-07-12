@@ -6,6 +6,5 @@ public enum ErrorCode {
     USER_NOT_FOUND,
     VALIDATION_ERROR,
     INVALID_JSON,
-
     INTERNAL_SERVER_ERROR
 }
