@@ -5,7 +5,6 @@ import com.restaurant.common.exception.ApiException;
 import com.restaurant.user.dto.request.CreateUserRequest;
 import com.restaurant.user.entity.User;
 import com.restaurant.user.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
