@@ -30,8 +30,8 @@ public class UserController {
     }
 
 
-    @GetMapping("/findUserById")
-    ResponseEntity<ApiResponse<User>> findUserById(@RequestParam Long id) {
+    @GetMapping("/user/{id}")
+    ResponseEntity<ApiResponse<User>> findUserById(@PathVariable Long id) {
         User user = userService.findUserById(id);
         return ResponseEntity.ok().body(ApiResponse.ok("Успешно", user));
     }
