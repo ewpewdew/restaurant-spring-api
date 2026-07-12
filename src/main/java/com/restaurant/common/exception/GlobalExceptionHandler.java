@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ApiErrorResponse> handleApiException(ApiException e) {
         HttpStatus status = switch (e.getErrorCode()) {
-            case NOT_FOUND, USER_NOT_FOUND -> HttpStatus.NOT_FOUND;
+            case NOT_FOUND -> HttpStatus.NOT_FOUND;
             case VALIDATION_ERROR, INVALID_JSON, EMAIL_ALREADY_EXISTS, PHONE_ALREADY_EXISTS -> HttpStatus.BAD_REQUEST;
             case INTERNAL_SERVER_ERROR -> HttpStatus.INTERNAL_SERVER_ERROR;
         };

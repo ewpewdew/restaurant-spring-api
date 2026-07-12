@@ -9,9 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @RestController()
 @RequestMapping("/api/users")
@@ -34,13 +31,9 @@ public class UserController {
 
 
     @GetMapping("/findUserById")
-    ResponseEntity<ApiResponse<Optional<User>>> findUserById(
-            @RequestParam Long id
-    ) {
-
-        Optional<User> userResponse = userService.findUserById(id);
-
-        return ResponseEntity.ok().body(ApiResponse.ok("Успешно", userResponse));
+    ResponseEntity<ApiResponse<User>> findUserById(@RequestParam Long id) {
+        User user = userService.findUserById(id);
+        return ResponseEntity.ok().body(ApiResponse.ok("Успешно", user));
     }
 
 }

@@ -8,7 +8,7 @@ public class UserResponse {
     private String lastName;
     private String email;
     private String phone;
-    private String isActive;
+    private Boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -53,12 +53,12 @@ public class UserResponse {
         this.phone = phone;
     }
 
-    public String getIsActive() {
-        return isActive;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public LocalDateTime getCreatedAt() {

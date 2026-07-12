@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 @Component
 public class UserRowMapper implements RowMapper<User> {
@@ -18,8 +19,17 @@ public class UserRowMapper implements RowMapper<User> {
         user.setEmail(rs.getString("email"));
         user.setPhone(rs.getString("phone"));
         user.setActive(rs.getBoolean("is_active"));
-        user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-        user.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+
+        Timestamp createdAt = rs.getTimestamp("created_at");
+        if (createdAt != null) {
+            user.setCreatedAt(createdAt.toLocalDateTime());
+        }
+
+        Timestamp updatedAt = rs.getTimestamp("updated_at");
+        if (updatedAt != null) {
+            user.setUpdatedAt(updatedAt.toLocalDateTime());
+        }
+
         return user;
     }
 }

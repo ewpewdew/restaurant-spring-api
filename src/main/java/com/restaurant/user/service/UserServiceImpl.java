@@ -7,8 +7,6 @@ import com.restaurant.user.entity.User;
 import com.restaurant.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -49,10 +47,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Optional<User> findUserById(Long id) {
-        return Optional.of(userRepository.findById(id).orElseThrow(() -> new ApiException(
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ApiException(
                 ErrorCode.NOT_FOUND,
-                "Такой пользователь не найден")));
+                "Такой пользователь не найден"));
     }
 
 }

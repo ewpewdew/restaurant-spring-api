@@ -8,7 +8,7 @@ public class User {
     private String lastName;
     private String email;
     private String phone;
-    private Boolean isActive;
+    private Boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -18,7 +18,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
-        this.isActive = isActive;
+        this.active = isActive;
     }
 
     // Конструктор для чтения из БД
@@ -28,7 +28,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
-        this.isActive = isActive;
+        this.active = isActive;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -53,8 +53,8 @@ public class User {
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
 
-    public Boolean getActive() { return isActive; }
-    public void setActive(Boolean active) { isActive = active; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
