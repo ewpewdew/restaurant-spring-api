@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findUserById(Long id) {
         return Optional.of(userRepository.findById(id).orElseThrow(() -> new ApiException(
-                ErrorCode.USER_NOT_FOUND,
+                ErrorCode.NOT_FOUND,
                 "Такой пользователь не найден")));
     }
 

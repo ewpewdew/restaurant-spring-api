@@ -9,6 +9,5 @@ public record ApiErrorResponse(
         ErrorCode errorCode,
         String message,
         LocalDateTime errorTime
-
 ) {
 }
