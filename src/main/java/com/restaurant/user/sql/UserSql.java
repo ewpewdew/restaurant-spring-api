@@ -38,6 +38,16 @@ public final class UserSql {
             RETURNING id;
            """;
 
+    public static final String UPDATE_USER = """
+           UPDATE users
+           SET  first_name = ?,
+                last_name = ?,
+                email = ?,
+                phone = ?,
+                updated_at = NOW()
+           WHERE id = ?
+           """;
+
     public static final String FIND_BY_ID = """
         SELECT
             id,
