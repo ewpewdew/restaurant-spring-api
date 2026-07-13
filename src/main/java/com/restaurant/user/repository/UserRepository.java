@@ -10,4 +10,5 @@ public interface UserRepository {
     boolean existsByEmail(String email);
     boolean existsByPhone(String phone);
     void update(Long id, User user);
+    void patch(Long id, String firstName, String lastName, String email, String phone, Boolean active);
 }
