@@ -42,11 +42,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> findAll() {
-        return List.of();
-    }
-
-    @Override
     public boolean existsByEmail(String email) {
         return Boolean.TRUE.equals(jdbcTemplate.queryForObject(
                 UserSql.EXISTS_BY_EMAIL,

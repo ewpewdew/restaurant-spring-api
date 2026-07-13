@@ -12,6 +12,14 @@ public final class UserSql {
             )
             """;
 
+    public static final String EXISTS_BY_PHONE = """
+        SELECT EXISTS (
+            SELECT 1
+            FROM users
+            WHERE phone = ?
+        )
+        """;
+
     public static final String INSERT_USER = """
            INSERT INTO users (
                 first_name,
@@ -29,15 +37,6 @@ public final class UserSql {
             )
             RETURNING id;
            """;
-
-    public static final String EXISTS_BY_PHONE = """
-        SELECT EXISTS (
-            SELECT 1
-            FROM users
-            WHERE phone = ?
-        )
-        """;
-
 
     public static final String FIND_BY_ID = """
         SELECT

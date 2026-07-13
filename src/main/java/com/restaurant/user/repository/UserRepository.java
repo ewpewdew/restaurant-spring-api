@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface UserRepository {
     Long save(User user);
     Optional<User> findById(Long id);
-    List<User> findAll();
     boolean existsByEmail(String email);
     boolean existsByPhone(String phone);
 }
