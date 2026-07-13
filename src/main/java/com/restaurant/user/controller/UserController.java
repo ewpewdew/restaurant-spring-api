@@ -2,6 +2,7 @@ package com.restaurant.user.controller;
 
 import com.restaurant.common.dto.ApiResponse;
 import com.restaurant.user.dto.request.CreateUserRequest;
+import com.restaurant.user.dto.request.PatchUserRequest;
 import com.restaurant.user.dto.request.UpdateUserRequest;
 import com.restaurant.user.dto.response.CreateUserResponse;
 import com.restaurant.user.dto.response.UserResponse;
@@ -47,6 +48,17 @@ public class UserController {
         CreateUserResponse response = new CreateUserResponse();
         response.setId(userId);
 
+        return ResponseEntity.ok(ApiResponse.ok("Пользователь обновлён", response));
+    }
+
+    @PatchMapping("/user/{id}")
+    ResponseEntity<ApiResponse<CreateUserResponse>> patchUser(
+            @PathVariable Long id,
+            @Valid @RequestBody PatchUserRequest request) {
+
+        Long userId = userService.patchUser(id, request);
+        CreateUserResponse response = new CreateUserResponse();
+        response.setId(userId);
         return ResponseEntity.ok(ApiResponse.ok("Пользователь обновлён", response));
     }
 

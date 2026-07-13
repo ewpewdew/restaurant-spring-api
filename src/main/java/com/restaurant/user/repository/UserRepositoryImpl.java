@@ -1,5 +1,6 @@
 package com.restaurant.user.repository;
 
+import com.restaurant.user.dto.request.PatchUserRequest;
 import com.restaurant.user.entity.User;
 import com.restaurant.user.mapper.UserRowMapper;
 import com.restaurant.user.sql.UserSql;
@@ -7,6 +8,7 @@ import com.restaurant.user.sql.UserSql;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,5 +74,37 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getPhone(),
                 id
         );
+    }
+
+    @Override
+    public void patch(Long id, PatchUserRequest request) {
+        StringBuilder sql = new StringBuilder("UPDATE users SET ");
+        List<Object> params = new ArrayList<>();
+
+        if (request.getFirstName() != null) {
+            sql.append("first_name = ?, ");
+            params.add(request.getFirstName());
+        }
+        if (request.getLastName() != null) {
+            sql.append("last_name = ?, ");
+            params.add(request.getLastName());
+        }
+        if (request.getEmail() != null) {
+            sql.append("email = ?, ");
+            params.add(request.getEmail());
+        }
+        if (request.getPhone() != null) {
+            sql.append("phone = ?, ");
+            params.add(request.getPhone());
+        }
+        if (request.getActive() != null) {
+            sql.append("is_active = ?, ");
+            params.add(request.getActive());
+        }
+
+        sql.append("updated_at = NOW() WHERE id = ?");
+        params.add(id);
+
+        jdbcTemplate.update(sql.toString(), params.toArray());
     }
 }
