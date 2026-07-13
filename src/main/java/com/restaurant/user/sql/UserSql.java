@@ -8,7 +8,7 @@ public final class UserSql {
             SELECT EXISTS (
                 SELECT 1
                 FROM users
-                WHERE email = :email
+                WHERE email = ?
             )
             """;
 
@@ -21,11 +21,11 @@ public final class UserSql {
                 is_active
             )
             VALUES (
-                :firstName,
-                :lastName,
-                :email,
-                :phone,
-                :isActive
+                ?,
+                ?,
+                ?,
+                ?,
+                ?
             )
             RETURNING id;
            """;
@@ -34,7 +34,7 @@ public final class UserSql {
         SELECT EXISTS (
             SELECT 1
             FROM users
-            WHERE phone = :phone
+            WHERE phone = ?
         )
         """;
 
@@ -50,7 +50,7 @@ public final class UserSql {
             created_at,
             updated_at
         FROM users
-        WHERE id = :id
+        WHERE id = ?
         """;
 
 }

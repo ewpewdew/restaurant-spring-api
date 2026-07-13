@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long createUser(CreateUserRequest request) {
+
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new ApiException(
                     ErrorCode.EMAIL_ALREADY_EXISTS,
