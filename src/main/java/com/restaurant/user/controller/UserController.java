@@ -2,7 +2,9 @@ package com.restaurant.user.controller;
 
 import com.restaurant.common.dto.ApiResponse;
 import com.restaurant.user.dto.request.CreateUserRequest;
+import com.restaurant.user.dto.request.UpdateUserRequest;
 import com.restaurant.user.dto.response.CreateUserResponse;
+import com.restaurant.user.dto.response.UserResponse;
 import com.restaurant.user.entity.User;
 import com.restaurant.user.service.UserService;
 import jakarta.validation.Valid;
@@ -31,9 +33,21 @@ public class UserController {
 
 
     @GetMapping("/user/{id}")
-    ResponseEntity<ApiResponse<User>> findUserById(@PathVariable Long id) {
+    ResponseEntity<ApiResponse<UserResponse>> findUserById(@PathVariable Long id) {
         User user = userService.findUserById(id);
-        return ResponseEntity.ok().body(ApiResponse.ok("Успешно", user));
+        return ResponseEntity.ok().body(ApiResponse.ok("Успешно", UserResponse.from(user)));
+    }
+
+    @PutMapping("/update/{id}")
+    ResponseEntity<ApiResponse<CreateUserResponse>> updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateUserRequest request) {
+
+        Long userId = userService.updateUser(id, request);
+        CreateUserResponse response = new CreateUserResponse();
+        response.setId(userId);
+
+        return ResponseEntity.ok(ApiResponse.ok("Пользователь обновлён", response));
     }
 
 }

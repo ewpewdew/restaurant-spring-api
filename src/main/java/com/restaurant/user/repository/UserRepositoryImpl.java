@@ -3,7 +3,7 @@ package com.restaurant.user.repository;
 import com.restaurant.user.entity.User;
 import com.restaurant.user.mapper.UserRowMapper;
 import com.restaurant.user.sql.UserSql;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,9 +14,11 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserRowMapper userRowMapper;
 
-    public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public UserRepositoryImpl(JdbcTemplate jdbcTemplate, UserRowMapper userRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userRowMapper = userRowMapper;
     }
 
     @Override
@@ -34,11 +36,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(Long id) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(
+        List<User> users = jdbcTemplate.query(
                 UserSql.FIND_BY_ID,
-                new BeanPropertyRowMapper<>(User.class),
+                userRowMapper,
                 id
-        ));
+        );
+        return users.isEmpty() ? Optional.empty() : Optional.of(users.getFirst());
     }
 
     @Override
@@ -57,5 +60,17 @@ public class UserRepositoryImpl implements UserRepository {
                 Boolean.class,
                 phone
         ));
+    }
+
+    @Override
+    public void update(Long id, User user) {
+        jdbcTemplate.update(
+                UserSql.UPDATE_USER,
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone(),
+                id
+        );
     }
 }

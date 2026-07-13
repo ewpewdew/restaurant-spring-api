@@ -1,7 +1,10 @@
 package com.restaurant.user.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.restaurant.user.entity.User;
 import java.time.LocalDateTime;
 
+@JsonPropertyOrder({"id", "firstName", "lastName", "email", "phone", "active", "createdAt", "updatedAt"})
 public class UserResponse {
     private Long id;
     private String firstName;
@@ -75,5 +78,18 @@ public class UserResponse {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public static UserResponse from(User user) {
+        UserResponse response = new UserResponse();
+        response.setId(user.getId());
+        response.setFirstName(user.getFirstName());
+        response.setLastName(user.getLastName());
+        response.setEmail(user.getEmail());
+        response.setPhone(user.getPhone());
+        response.setActive(user.getActive());
+        response.setCreatedAt(user.getCreatedAt());
+        response.setUpdatedAt(user.getUpdatedAt());
+        return response;
     }
 }
