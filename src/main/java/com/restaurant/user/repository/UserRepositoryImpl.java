@@ -6,6 +6,8 @@ import com.restaurant.user.mapper.UserRowMapper;
 import com.restaurant.user.sql.UserSql;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -16,10 +18,12 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final UserRowMapper userRowMapper;
 
-    public UserRepositoryImpl(JdbcTemplate jdbcTemplate, UserRowMapper userRowMapper) {
+    public UserRepositoryImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, UserRowMapper userRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.userRowMapper = userRowMapper;
     }
 
@@ -77,34 +81,32 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void patch(Long id, PatchUserRequest request) {
+    public void patch(Long id, String firstName, String lastName, String email, String phone, Boolean active) {
         StringBuilder sql = new StringBuilder("UPDATE users SET ");
-        List<Object> params = new ArrayList<>();
+        MapSqlParameterSource params = new MapSqlParameterSource("id", id);
 
-        if (request.getFirstName() != null) {
-            sql.append("first_name = ?, ");
-            params.add(request.getFirstName());
+        if (firstName != null) {
+            sql.append("first_name = :firstName, ");
+            params.addValue("firstName", firstName);
         }
-        if (request.getLastName() != null) {
-            sql.append("last_name = ?, ");
-            params.add(request.getLastName());
+        if (lastName != null) {
+            sql.append("last_name = :lastName, ");
+            params.addValue("lastName", lastName);
         }
-        if (request.getEmail() != null) {
-            sql.append("email = ?, ");
-            params.add(request.getEmail());
+        if (email != null) {
+            sql.append("email = :email, ");
+            params.addValue("email", email);
         }
-        if (request.getPhone() != null) {
-            sql.append("phone = ?, ");
-            params.add(request.getPhone());
+        if (phone != null) {
+            sql.append("phone = :phone, ");
+            params.addValue("phone", phone);
         }
-        if (request.getActive() != null) {
-            sql.append("is_active = ?, ");
-            params.add(request.getActive());
+        if (active != null) {
+            sql.append("is_active = :is_active, ");
+            params.addValue("is_active", active);
         }
 
-        sql.append("updated_at = NOW() WHERE id = ?");
-        params.add(id);
-
-        jdbcTemplate.update(sql.toString(), params.toArray());
+        sql.append("updated_at = NOW() WHERE id = :id");
+        namedParameterJdbcTemplate.update(sql.toString(), params);
     }
 }

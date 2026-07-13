@@ -94,12 +94,20 @@ public class UserServiceImpl implements UserService {
             throw new ApiException(ErrorCode.EMAIL_ALREADY_EXISTS, "Email уже занят");
         }
 
-        if (!existing.getPhone().equals(request.getPhone())
+        if (request.getPhone() != null
+                && !request.getPhone().equals(existing.getPhone())
                 && userRepository.existsByPhone(request.getPhone())) {
             throw new ApiException(ErrorCode.PHONE_ALREADY_EXISTS, "Телефон уже занят");
         }
 
-        userRepository.patch(id, request);
+        userRepository.patch(id,
+                request.getFirstName(),
+                request.getLastName(),
+                request.getEmail(),
+                request.getPhone(),
+                request.getActive()
+        );
+
         return id;
     }
 
