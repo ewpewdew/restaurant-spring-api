@@ -14,11 +14,9 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final UserRowMapper userRowMapper;
 
-    public UserRepositoryImpl(JdbcTemplate jdbcTemplate, UserRowMapper userRowMapper) {
+    public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.userRowMapper = userRowMapper;
     }
 
     @Override
